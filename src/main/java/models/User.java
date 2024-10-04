@@ -8,28 +8,37 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "phone")
     private String phone;
+
+    @Column(name = "manager")
     private Boolean manager;
 
-    public User(int id, String name, String address, String phone, Boolean manager) {
-        this.id = id;
+    // Default constructor
+    public User() {}
+
+    // Constructor with fields
+    public User(String name, String address, String phone, Boolean manager) {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.manager = manager;
     }
 
-    public User() {}
-
-    public int getId() {
+    // Getters and setters
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,11 +76,12 @@ public class User {
 
     @Override
     public String toString() {
-        return "User: " +
+        return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
-                ", manager=" + manager;
+                ", manager=" + manager +
+                '}';
     }
 }

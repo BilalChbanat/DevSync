@@ -1,13 +1,14 @@
 package repositories;
 
 import models.User;
-
-import java.util.HashMap;
+import java.util.List;
 
 public interface UserRepository {
-    HashMap<String, User> findAll();
-    User findById(int id);
-    void create(User user);
-    void update(User user);
-    void delete(int id);
+    List<User> findAll();
+    User findById(Long id);
+    User create(User user);
+    User update(User user);
+    void delete(Long id);
+    User findByName(String name);
+    List<User> findByManager(Boolean manager);
 }

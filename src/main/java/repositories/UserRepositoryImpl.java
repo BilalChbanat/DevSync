@@ -1,71 +1,68 @@
 package repositories;
 
-import jakarta.persistence.EntityManager;
 import models.User;
 import utils.DatabaseConnect;
-
-import java.util.HashMap;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private EntityManager entityManager;
+    private EntityManager em;
 
     public UserRepositoryImpl() {
-        this.entityManager = DatabaseConnect.getInstance().getEntityManager();
+        this.em = DatabaseConnect.getInstance().getEntityManager();
     }
 
     @Override
-    public HashMap<String, User> findAll() {
-        List<User> userList = entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
-        HashMap<String, User> users = new HashMap<>();
-        for (User user : userList) {
-            users.put(String.valueOf(user.getId()), user);
+    public List<User> findAll() {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public User findById(Long id) {
+        return em.find(User.class, id);
+    }
+
+    @Override
+    public User create(User user) {
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
+        return user;
+    }
+
+    @Override
+    public User update(User user) {
+        em.getTransaction().begin();
+        User updatedUser = em.merge(user);
+        em.getTransaction().commit();
+        return updatedUser;
+    }
+
+    @Override
+    public void delete(Long id) {
+        em.getTransaction().begin();
+        User user = em.find(User.class, id);
+        if (user != null) {
+            em.remove(user);
         }
-        return users;
+        em.getTransaction().commit();
     }
 
     @Override
-    public User findById(int id) {
-        return entityManager.find(User.class, id);
+    public User findByName(String name) {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
+        query.setParameter("name", name);
+        List<User> results = query.getResultList();
+        return results.isEmpty() ? null : results.get(0);
     }
 
     @Override
-    public void create(User user) {
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(user);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void update(User user) {
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.merge(user);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void delete(int id) {
-        try {
-            entityManager.getTransaction().begin();
-            User user = entityManager.find(User.class, id);
-            if (user != null) {
-                entityManager.remove(user);
-            }
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            entityManager.getTransaction().rollback();
-            e.printStackTrace();
-        }
+    public List<User> findByManager(Boolean manager) {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.manager = :manager", User.class);
+        query.setParameter("manager", manager);
+        return query.getResultList();
     }
 }
