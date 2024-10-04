@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import models.User;
 import repositories.UserRepository;
 import repositories.UserRepositoryImpl;
-import repositories.repoimpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,31 +27,48 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Fetch all users from the repository
-        List<User> users = userRepository.findAll();
+        String action = request.getParameter("action");
 
-        // Set users list as a request attribute to pass to JSP
-        request.setAttribute("users", users);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/create.jsp");
-        dispatcher.forward(request, response);
+        if ("edit".equals(action)) {
+            Long id = Long.valueOf(request.getParameter("id"));
+            User user = userRepository.findById(id);
+            request.setAttribute("user", user);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/edit.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            List<User> users = userRepository.findAll();
+            request.setAttribute("users", users);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/create.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        boolean manager = request.getParameter("manager") != null;
+        String action = request.getParameter("action");
 
-        User user = new User(name, address, phone, manager);
-        userRepository.create(user);
+        if ("update".equals(action)) {
+            Long id = Long.valueOf(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String address = request.getParameter("address");
+            String phone = request.getParameter("phone");
+            boolean manager = request.getParameter("manager") != null;
 
-        response.sendRedirect("UserController");
+            User user = new User(id, name, address, phone, manager);
+            userRepository.update(user);
+
+            response.sendRedirect("UserController");
+        } else {
+            String name = request.getParameter("name");
+            String address = request.getParameter("address");
+            String phone = request.getParameter("phone");
+            boolean manager = request.getParameter("manager") != null;
+
+            User user = new User(name, address, phone, manager);
+            userRepository.create(user);
+
+            response.sendRedirect("UserController");
+        }
     }
-
-
-
-
 }

@@ -16,6 +16,7 @@
         <th>Address</th>
         <th>Phone</th>
         <th>Is Manager</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -32,6 +33,8 @@
         <td><%= user.getAddress() %></td>
         <td><%= user.getPhone() %></td>
         <td><%= user.getManager() ? "Yes" : "No" %></td>
+        <td><a href="UserController?action=edit&id=<%= user.getId() %>">Edit</a></td>
+
     </tr>
     <%
         }

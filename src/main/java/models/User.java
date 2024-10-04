@@ -33,6 +33,15 @@ public class User {
         this.manager = manager;
     }
 
+    public User(Long id, String name, String address, String phone, boolean manager) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.manager = manager;
+
+    }
+
     // Getters and setters
     public Long getId() {
         return id;

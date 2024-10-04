@@ -64,12 +64,22 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User update(User user) {
-        executeInTransaction(() -> {
-            EntityManager em = emf.createEntityManager();
-            em.merge(user);
-        });
-        return user;
+        EntityManager entityManager = emf.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            user = entityManager.merge(user); // Merge the user object
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            entityManager.close();
+        }
+        return user; // Return the merged user
     }
+
 
     @Override
     public void delete(Long id) {
