@@ -1,49 +1,35 @@
+
+
+
+
+
+
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="models.User" %>
-<%@ page import="java.util.List" %>
 <html>
 <head>
-    <title>User List</title>
+    <title>Create User</title>
 </head>
 <body>
-<h1>User List</h1>
+<h1>Create New User</h1>
+<form action="UserController" method="post">
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Phone</th>
-        <th>Is Manager</th>
-    </tr>
-    </thead>
-    <tbody>
-    <%
-        List<User> users = (List<User>) request.getAttribute("users");
-        if (users != null && !users.isEmpty()) {
-            for (User user : users) {
-    %>
-    <tr>
-        <td><%= user.getId() %></td>
-        <td><%= user.getName() %></td>
-        <td><%= user.getAddress() %></td>
-        <td><%= user.getPhone() %></td>
-        <td><%= user.getManager() ? "Yes" : "No" %></td>
-    </tr>
-    <%
-        }
-    } else {
-    %>
-    <tr>
-        <td colspan="5">No users found.</td>
-    </tr>
-    <%
-        }
-    %>
-    </tbody>
-</table>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
 
-<a href="create.jsp">Create New User</a>
+    <label for="address">Address:</label>
+    <input type="text" id="address" name="address" required><br>
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone" required><br>
+
+    <label for="manager">Is Manager:</label>
+    <input type="checkbox" id="manager" name="manager"><br>
+
+    <input type="submit" value="Create User">
+</form>
+
+<a href="UserController">Back to User List</a>
 </body>
 </html>
