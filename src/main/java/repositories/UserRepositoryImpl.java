@@ -1,68 +1,120 @@
 package repositories;
 
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import models.User;
-import utils.DatabaseConnect;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private EntityManager em;
+    private EntityManagerFactory emf;
 
     public UserRepositoryImpl() {
-        this.em = DatabaseConnect.getInstance().getEntityManager();
+        this.emf = Persistence.createEntityManagerFactory("postgres");
     }
 
-    @Override
-    public List<User> findAll() {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
-        return query.getResultList();
+    // Utility method for executing transactions without generics
+    private void executeInTransaction(Runnable action) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        try {
+            action.run();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e; // Re-throw to handle it further up if needed
+        } finally {
+            em.close();
+        }
     }
+
+
 
     @Override
     public User findById(Long id) {
-        return em.find(User.class, id);
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(User.class, id);
+        } finally {
+            em.close();
+        }
     }
+
 
     @Override
     public User create(User user) {
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(user);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback(); // Rollback if transaction is active
+            }
+            throw e; // Rethrow exception for further handling
+        } finally {
+            entityManager.close(); // Ensure entity manager is closed
+        }
+        return user;
+    }
+
+
+    @Override
+    public User update(User user) {
+        executeInTransaction(() -> {
+            EntityManager em = emf.createEntityManager();
+            em.merge(user);
+        });
         return user;
     }
 
     @Override
-    public User update(User user) {
-        em.getTransaction().begin();
-        User updatedUser = em.merge(user);
-        em.getTransaction().commit();
-        return updatedUser;
-    }
-
-    @Override
     public void delete(Long id) {
-        em.getTransaction().begin();
-        User user = em.find(User.class, id);
-        if (user != null) {
-            em.remove(user);
-        }
-        em.getTransaction().commit();
+        executeInTransaction(() -> {
+            EntityManager em = emf.createEntityManager();
+            User user = em.find(User.class, id);
+            if (user != null) {
+                em.remove(user);
+            }
+        });
     }
 
     @Override
     public User findByName(String name) {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
-        query.setParameter("name", name);
-        List<User> results = query.getResultList();
-        return results.isEmpty() ? null : results.get(0);
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.name = :name", User.class);
+            query.setParameter("name", name);
+            List<User> results = query.getResultList();
+            return results.isEmpty() ? null : results.get(0);
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public List<User> findByManager(Boolean manager) {
-        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.manager = :manager", User.class);
-        query.setParameter("manager", manager);
-        return query.getResultList();
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.manager = :manager", User.class);
+            query.setParameter("manager", manager);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+
+    @Override
+    public List<User> findAll() {
+        EntityManager entityManager = emf.createEntityManager();
+        try {
+            return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
+        } finally {
+            entityManager.close();
+        }
     }
 }

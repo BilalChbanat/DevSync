@@ -11,4 +11,6 @@ public interface UserRepository {
     void delete(Long id);
     User findByName(String name);
     List<User> findByManager(Boolean manager);
+
+
 }
