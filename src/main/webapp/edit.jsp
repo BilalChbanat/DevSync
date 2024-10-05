@@ -12,15 +12,15 @@
 %>
 
 <form action="UserController" method="post">
-    <input type="hidden" name="id" value="<%= user.getId() %>"/>
+    <input type="hidden" name="id" value="${user.id}"/>
     <label>Name:</label>
-    <input type="text" name="name" value="<%= user.getName() %>" required/><br/>
+    <input type="text" name="name" value="${user.name}" required/><br/>
 
     <label>Address:</label>
-    <input type="text" name="address" value="<%= user.getAddress() %>" required/><br/>
+    <input type="text" name="address" value="${user.address}" required/><br/>
 
     <label>Phone:</label>
-    <input type="text" name="phone" value="<%= user.getPhone() %>" required/><br/>
+    <input type="text" name="phone" value="${user.phone}" required/><br/>
 
     <label>Is Manager:</label>
     <input type="checkbox" name="manager" <%= user.getManager() ? "checked" : "" %>/><br/>

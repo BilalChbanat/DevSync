@@ -64,32 +64,25 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User update(User user) {
-        EntityManager entityManager = emf.createEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            user = entityManager.merge(user); // Merge the user object
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            entityManager.close();
-        }
-        return user; // Return the merged user
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(user);
+        em.getTransaction().commit();
+        em.close();
+        return user;
     }
 
 
     @Override
-    public void delete(Long id) {
-        executeInTransaction(() -> {
-            EntityManager em = emf.createEntityManager();
-            User user = em.find(User.class, id);
-            if (user != null) {
-                em.remove(user);
-            }
-        });
+    public void delete(Long userId) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        User user = em.find(User.class, userId);
+        if (user != null) {
+            em.remove(user);
+        }
+        em.getTransaction().commit();
+        em.close();
     }
 
     @Override

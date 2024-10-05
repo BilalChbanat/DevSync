@@ -59,7 +59,12 @@ public class UserController extends HttpServlet {
             userRepository.update(user);
 
             response.sendRedirect("UserController");
-        } else {
+        } else if ("delete".equals(action)) {
+            Long userId = Long.valueOf(request.getParameter("id"));
+            userRepository.delete(userId);
+
+            response.sendRedirect("UserController");
+        }else {
             String name = request.getParameter("name");
             String address = request.getParameter("address");
             String phone = request.getParameter("phone");

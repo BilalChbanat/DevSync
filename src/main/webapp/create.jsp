@@ -17,6 +17,7 @@
         <th>Phone</th>
         <th>Is Manager</th>
         <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -33,7 +34,19 @@
         <td><%= user.getAddress() %></td>
         <td><%= user.getPhone() %></td>
         <td><%= user.getManager() ? "Yes" : "No" %></td>
-        <td><a href="UserController?action=edit&id=<%= user.getId() %>">Edit</a></td>
+<%--        <td><a href="edit/<%= user.getId() %>">Edit</a></td>--%>
+        <td><form action="UserController" method="GET" style="display:inline;">
+            <input type="hidden" name="action" value="edit" class="cursor-pointer">
+            <input type="hidden" name="id" value="<%= user.getId() %>">
+
+            <input type="submit" value="Edit" class="bg-blue-500 text-white rounded px-3 py-1 hover:bg-blue-600 transition duration-200">
+        </form></td>
+        <td><form action="UserController" method="POST" style="display:inline;">
+            <input type="hidden" name="action" value="delete" class="cursor-pointer">
+            <input type="hidden" name="id" value="<%= user.getId() %>">
+
+            <input type="submit" value="Delete" class="bg-red-500 text-white rounded px-3 py-1 hover:bg-red-600 transition duration-200" onclick="return confirm('Are you sure you want to delete this user?');">
+        </form></td>
 
     </tr>
     <%
