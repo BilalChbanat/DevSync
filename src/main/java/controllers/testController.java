@@ -27,13 +27,10 @@ public class testController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Get all users from the repository
         List<User> users = userRepository.getAll();
 
-        // Set the users in the request attribute to pass to JSP
         request.setAttribute("users", users);
 
-        // Forward the request to index.jsp
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
     }
