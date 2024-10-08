@@ -34,15 +34,15 @@
 
 <!-- component -->
 <body class="bg-gray-200">
-<header class="text-gray-200 body-font bg-[#0B192C] shadow-lg">
-    <div class=" text-gray-200 bg-[#0B192C] container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+<header class="text-gray-200 body-font bg-gray-800 shadow-lg">
+    <div class=" text-gray-200 bg-gray-800 container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a class="flex title-font font-medium items-center text-gray-200 mb-4 md:mb-0 cursor-pointer">
             <img class="w-[2.7rem]" src="https://imgs.search.brave.com/BPxP56KKsMZnM4ZSZCqvQKQZlWvNGifYz2L_6En8Mzs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMtMDAuaWNvbmR1/Y2suY29tL2Fzc2V0/cy4wMC9kb2xwaGlu/LWVtdS1pY29uLTI1/NngyNTMtbW8wdWFw/eXQucG5n" alt="DevSync">
             <span class="ml-3 text-xl">DevSync</span>
         </a>
-        <nav  class=" text-gray-200 bg-[#0B192C] md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-            <a href="UserController" class="mr-5 hover:text-gray-200">User List</a>
-            <a href="index.jsp" class="mr-5 hover:text-gray-200">New User</a>
+        <nav  class=" text-gray-200 bg-gray-800 md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+            <a href="UserServelt" class="mr-5 hover:text-gray-200">User List</a>
+            <a href="#" class="mr-5 hover:text-gray-200">New User</a>
 
         </nav>
         <button class="inline-flex items-center text-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-[#1E3E62] rounded text-base mt-4 md:mt-0">Login
@@ -62,7 +62,7 @@
         </div>
 
         <div class="m-6">
-            <form action="UserController" method="post" class="mb-4">
+            <form action="UserServlet" method="post" class="mb-4">
                 <div class="mb-6">
                     <label for="name" class="block mb-2 text-sm text-gray-100 dark:text-gray-400">User name</label>
                     <input type="text" name="name" id="name" placeholder="Type your name" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500">

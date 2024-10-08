@@ -8,16 +8,16 @@
     <link rel="icon" href="https://imgs.search.brave.com/BPxP56KKsMZnM4ZSZCqvQKQZlWvNGifYz2L_6En8Mzs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMtMDAuaWNvbmR1/Y2suY29tL2Fzc2V0/cy4wMC9kb2xwaGlu/LWVtdS1pY29uLTI1/NngyNTMtbW8wdWFw/eXQucG5n">
 
 </head>
-<body class="bg-[#0B192C]">
-<header class="text-gray-200 body-font bg-[#0B192C] shadow-lg">
-    <div class=" text-gray-200 bg-[#0B192C] container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+<body class="bg-gray-100">
+<header class="text-gray-200 body-font bg-gray-800 shadow-lg">
+    <div class=" text-gray-200 bg-gray-800 container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a class="flex title-font font-medium items-center text-gray-200 mb-4 md:mb-0 cursor-pointer">
             <img class="w-[2.7rem]" src="https://imgs.search.brave.com/BPxP56KKsMZnM4ZSZCqvQKQZlWvNGifYz2L_6En8Mzs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMtMDAuaWNvbmR1/Y2suY29tL2Fzc2V0/cy4wMC9kb2xwaGlu/LWVtdS1pY29uLTI1/NngyNTMtbW8wdWFw/eXQucG5n" alt="DevSync">
             <span class="ml-3 text-xl">DevSync</span>
         </a>
-        <nav  class=" text-gray-200 bg-[#0B192C] md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-            <a href="UserController" class="mr-5 hover:text-gray-200">User List</a>
-            <a href="index.jsp" class="mr-5 hover:text-gray-200">New User</a>
+        <nav  class=" text-gray-200 bg-gray-800 md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+            <a href="UserServlet" class="mr-5 hover:text-gray-200">User List</a>
+            <a href="user/index.jsp" class="mr-5 hover:text-gray-200">New User</a>
 
         </nav>
         <button class="inline-flex items-center text-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-[#1E3E62] rounded text-base mt-4 md:mt-0">Login
@@ -28,14 +28,14 @@
     </div>
 </header>
 
-<div class="flex flex-col mt-[5rem] ">
+<div class="flex flex-col mt-[5rem] bg-gray-100 ">
     <div class="-m-1.5 overflow-x-auto">
         <div class="p-1.5 min-w-full inline-block align-middle">
             <div class="overflow-hidden flex flex-col justify-center items-center ">
-                <table class="border rounded-l shadow-lg shadow-cyan-500/50 w-[50rem] text-grey-200 divide-y divide-gray-200">
-                    <thead class="text-grey-200 bg-[#0B192C]">
-                    <tr>
-                        <th scope="col" class="py-3 ps-4">
+                <table class="bg-gray-800 border rounded-xl shadow-lg shadow-black-500/50 w-[50rem] text-grey-200 divide-y divide-gray-200">
+                    <thead class="text-grey-200 bg-gray-800 rounded-xl">
+                    <tr class="rounded-xl">
+                        <th scope="col" class="py-3 ps-4 rounded-xl">
                             <div class="flex items-center h-5">
                                 <input id="hs-table-checkbox-all" type="checkbox" class="border-gray-200 rounded  focus:ring-blue-500">
                                 <label for="hs-table-checkbox-all" class="sr-only">Checkbox</label>
@@ -46,7 +46,7 @@
                         <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Address</th>
                         <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Manager</th>
                         <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"></th>
-                        <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"></th>
+                        <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase rounded-xl"></th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">

@@ -1,4 +1,4 @@
-package repositories;
+package repositories.user;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -15,7 +15,7 @@ public class UserRepositoryImpl implements UserRepository {
         this.emf = Persistence.createEntityManagerFactory("postgres");
     }
 
-    // Utility method for executing transactions without generics
+
     private void executeInTransaction(Runnable action) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepository {
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw e; // Re-throw to handle it further up if needed
+            throw e;
         } finally {
             em.close();
         }
@@ -52,11 +52,11 @@ public class UserRepositoryImpl implements UserRepository {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback(); // Rollback if transaction is active
+                entityManager.getTransaction().rollback();
             }
-            throw e; // Rethrow exception for further handling
+            throw e;
         } finally {
-            entityManager.close(); // Ensure entity manager is closed
+            entityManager.close();
         }
         return user;
     }

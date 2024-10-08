@@ -7,14 +7,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.User;
-import repositories.UserRepository;
-import repositories.UserRepositoryImpl;
+import repositories.user.UserRepository;
+import repositories.user.UserRepositoryImpl;
 
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/UserController")
-public class UserController extends HttpServlet {
+@WebServlet("/UserServlet")
+
+public class UserServlet extends HttpServlet {
 
     private UserRepository userRepository;
 
@@ -33,12 +34,12 @@ public class UserController extends HttpServlet {
             Long id = Long.valueOf(request.getParameter("id"));
             User user = userRepository.findById(id);
             request.setAttribute("user", user);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/edit.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/user/edit.jsp");
             dispatcher.forward(request, response);
         } else {
             List<User> users = userRepository.findAll();
             request.setAttribute("users", users);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/create.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/user/create.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -58,12 +59,12 @@ public class UserController extends HttpServlet {
             User user = new User(id, name, address, phone, manager);
             userRepository.update(user);
 
-            response.sendRedirect("UserController");
+            response.sendRedirect("UserServlet");
         } else if ("delete".equals(action)) {
             Long userId = Long.valueOf(request.getParameter("id"));
             userRepository.delete(userId);
 
-            response.sendRedirect("UserController");
+            response.sendRedirect("UserServlet");
         }else {
             String name = request.getParameter("name");
             String address = request.getParameter("address");
@@ -73,7 +74,7 @@ public class UserController extends HttpServlet {
             User user = new User(name, address, phone, manager);
             userRepository.create(user);
 
-            response.sendRedirect("UserController");
+            response.sendRedirect("UserServlet");
         }
     }
 }

@@ -22,10 +22,9 @@ public class User {
     @Column(name = "manager")
     private Boolean manager;
 
-    // Default constructor
+
     public User() {}
 
-    // Constructor with fields
     public User(String name, String address, String phone, Boolean manager) {
         this.name = name;
         this.address = address;
@@ -42,7 +41,7 @@ public class User {
 
     }
 
-    // Getters and setters
+
     public Long getId() {
         return id;
     }
