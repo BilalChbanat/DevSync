@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/UserServlet")
-
 public class UserServlet extends HttpServlet {
 
     private UserRepository userRepository;
@@ -55,8 +54,10 @@ public class UserServlet extends HttpServlet {
             String address = request.getParameter("address");
             String phone = request.getParameter("phone");
             boolean manager = request.getParameter("manager") != null;
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
 
-            User user = new User(id, name, address, phone, manager);
+            User user = new User(id, name, address, phone, manager, email, password);
             userRepository.update(user);
 
             response.sendRedirect("UserServlet");
@@ -65,13 +66,15 @@ public class UserServlet extends HttpServlet {
             userRepository.delete(userId);
 
             response.sendRedirect("UserServlet");
-        }else {
+        } else {
             String name = request.getParameter("name");
             String address = request.getParameter("address");
             String phone = request.getParameter("phone");
             boolean manager = request.getParameter("manager") != null;
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
 
-            User user = new User(name, address, phone, manager);
+            User user = new User(name, address, phone, manager, email, password);
             userRepository.create(user);
 
             response.sendRedirect("UserServlet");
