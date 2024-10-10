@@ -1,10 +1,8 @@
 package repositories.user;
 
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
 import models.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+
 import java.util.List;
 
 public class UserRepositoryImpl implements UserRepository {
@@ -14,6 +12,7 @@ public class UserRepositoryImpl implements UserRepository {
     public UserRepositoryImpl() {
         this.emf = Persistence.createEntityManagerFactory("postgres");
     }
+
 
 
     private void executeInTransaction(Runnable action) {
@@ -105,6 +104,20 @@ public class UserRepositoryImpl implements UserRepository {
             TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.manager = :manager", User.class);
             query.setParameter("manager", manager);
             return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
+            query.setParameter("email", email);
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         } finally {
             em.close();
         }
