@@ -15,6 +15,7 @@
             <img class="w-[2.7rem]" src="https://imgs.search.brave.com/BPxP56KKsMZnM4ZSZCqvQKQZlWvNGifYz2L_6En8Mzs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMtMDAuaWNvbmR1/Y2suY29tL2Fzc2V0/cy4wMC9kb2xwaGlu/LWVtdS1pY29uLTI1/NngyNTMtbW8wdWFw/eXQucG5n" alt="DevSync">
             <span class="ml-3 text-xl">DevSync</span>
         </a>
+
         <nav  class=" text-gray-200 bg-gray-800 md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
             <a href="UserServlet" class="mr-5 hover:text-gray-200">User List</a>
             <a href="user/index.jsp" class="mr-5 hover:text-gray-200">New User</a>
