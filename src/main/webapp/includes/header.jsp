@@ -9,6 +9,7 @@
         <nav  class=" text-gray-200 bg-gray-800 md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
             <a href="UserServlet" class="mr-5 hover:text-gray-200">User List</a>
             <a href="user/index.jsp" class="mr-5 hover:text-gray-200">New User</a>
+            <a href="tags" class="mr-5 hover:text-gray-200">Tags</a>
 
         </nav>
         <%
